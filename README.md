@@ -1,4 +1,12 @@
-# gomenter
+<h1 align="center">
+  <a href="/" alt="logo" >
+  <img src="https://tva1.sinaimg.cn/mw690/005Rbifqly1h8wt9pyecwj30le0l87a3.jpg" width="100" />
+  </a>
+  <br>
+    Gomenter
+  <br>
+</h1>
+
 [![Build Status](https://travis-ci.org/aktau/gomenter.svg?branch=master)](https://travis-ci.org/aktau/gomenter)
 [![GoDoc](https://godoc.org/github.com/aktau/gomenter?status.svg)](https://godoc.org/github.com/aktau/gomenter)
 ![Release](https://img.shields.io/github/release/aktau/gomenter.svg)
