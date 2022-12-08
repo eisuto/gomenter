@@ -4,14 +4,16 @@
 ![Release](https://img.shields.io/github/release/aktau/gomenter.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/aktau/gomenter/master/LICENSE)
 
-简体中文 | [English](./doc/README.en.md)
+[简体中文](../README.md) | English
 
-gomenter 是一个自托管的评论系统，允许用户在您的网站或博客上发表评论。它是用 Golang 构建的，并使用 SQLite 数据库来存储评论。
+gomenter is a self-hosted comment system, which allows users to leave comments on your website or blog. It is built with Golang, and uses a SQLite database to store comments.
 
-特性：
-- 自托管，无需第三方服务
-- 安装和使用简单
-- SQLite 数据库，无需额外配置
-- 支持 markdown 格式
+Features:
+
+- Self-hosted, no third-party services required
+- Easy to install and use
+- Support Markdown for comment formatting
+- Customizable themes and styles
 - ...
+
 
