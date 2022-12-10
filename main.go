@@ -1,24 +1,39 @@
 package main
 
 import (
+	"fmt"
+	"github.com/go-ini/ini"
 	"gomenter/models"
 	"gomenter/routers"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 func main() {
-	// 创建数据库
-	db, err := gorm.Open(sqlite.Open("comments.db"), &gorm.Config{})
+
+	// 获取配置
+	cfg, err := ini.Load("./conf/app.ini")
 	if err != nil {
-		panic("failed to connect database")
+		fmt.Println("Failed to parse INI file:", err)
+		return
+	}
+	databaseCfg, err := cfg.GetSection("Database")
+	if err != nil {
+		fmt.Println("Failed to get Database:", err)
+		return
+	}
+	serverCfg, err := cfg.GetSection("Server")
+	if err != nil {
+		fmt.Println("Failed to get Serve:", err)
+		return
 	}
 
-	// 自动迁移数据库结构
-	db.AutoMigrate(&models.Comment{})
+	// 初始化数据库
+	models.InitDB(
+		databaseCfg.Key("host").String(),
+		databaseCfg.Key("name").String(),
+	)
 
-	// 开启
-	r := routers.InitRouter(db)
-	r.Run(":8080")
+	// 启动服务
+	r := routers.InitRouter()
+	r.Run(fmt.Sprintf(":%s", serverCfg.Key("port").String()))
 
 }

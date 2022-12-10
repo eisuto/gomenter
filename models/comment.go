@@ -8,14 +8,13 @@ import (
 
 type Comment struct {
 	gorm.Model
-	Content string `json:"content"`
-	Author  string `json:"author"`
+	ArticleId string `json:"articleId"`
+	Content   string `json:"content"`
+	Author    string `json:"author"`
 }
 
-// CreateComment 定义添加评论的处理函数
+// CreateComment 保存
 func CreateComment(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-
 	// 解析请求参数
 	var comment Comment
 	if err := c.ShouldBindJSON(&comment); err != nil {
@@ -33,9 +32,8 @@ func CreateComment(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Comment created successfully"})
 }
 
-// DeleteComment 定义删除评论的处理函数
+// DeleteComment 删除
 func DeleteComment(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
 	// 解析请求参数
 	var comment Comment
 	if err := db.Where("id = ?", c.Param("id")).First(&comment).Error; err != nil {
@@ -53,16 +51,14 @@ func DeleteComment(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Comment deleted successfully"})
 }
 
-// ListComment 定义查看评论列表的处理函数
+// ListComment 列表
 func ListComment(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-	// 查询所有评论
+	// 根据articleId或author查询评论
 	var comments []Comment
-	if err := db.Find(&comments).Error; err != nil {
+	if err := db.Where("article_id = ?", c.Query("articleId")).Find(&comments).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-
 	// 返回响应
 	c.JSON(http.StatusOK, gin.H{"data": comments})
 }
